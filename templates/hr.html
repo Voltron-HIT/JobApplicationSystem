@@ -34,9 +34,6 @@
                     <a class="nav-link" href="{{url_for('humanResourceHome')}}"><b>HOME</b></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('applicantList')}}"><b>VIEW APPLICANTS LIST</b></a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{{url_for('addVacancy')}}"><b>ADD VACANCY</b></a>
                 </li>
                 <li class="nav-item">
@@ -64,17 +61,17 @@
                 <ul class="list-unstyled text-uppercase">
                     <li>
                         <a href="#">
-                            <h3>finance</h3>
+                            <h3>Finance</h3>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <h3>maintainance</h3>
+                            <h3>Maintenance</h3>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <h3>catering</h3>
+                            <h3>Catering</h3>
                         </a>
                     </li>
                 </ul>
@@ -92,9 +89,10 @@
                                 <h5 class="card-title text-uppercase">{{p[0]}}</h5><br>
                                 <small>{{p[8]}}</small>
                                 <ul class="list-unstyled ml-auto">
-                                    <a href="#" class="card-link" data-toggle="modal" data-target="#{{p[0]}}">Read More</a>
-                                    <li><a href="{{p[6]}}" class="card-link">Edit</a></li>
-                                    <li><a href="{{p[5]}}" class="card-link">Shortlist</a></li>
+                                    <a href="#" class="card-link" data-toggle="modal" data-target="#{{p[0]}}">Read More</a> |
+                                    <li><a href="{{p[6]}}" class="card-link">Edit</a> | </li>
+                                    <li><a href="{{p[5]}}" class="card-link">Shortlist</a> | </li>
+                                    <li><a href="{{p[7]}}" class="card-link">View Applicants</a></li>
                                 </ul>
                             </div>
                         </div>

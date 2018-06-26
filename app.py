@@ -251,12 +251,14 @@ def fullList(token):
 	postSession = token
 	return redirect(url_for('applicantList'))
 
-@app.route('/cv/<token>/<idToken>')
-def cv(token, idToken):
+@app.route('/cv/<token>/<idToken>/<postToken>')
+def cv(token, idToken, postToken):
     global nameSession
     nameSession = token
     global idSession
     idSession = idToken
+    global postSession
+    postSession = postToken
 
     return redirect(url_for('viewCV'))
 
@@ -327,30 +329,33 @@ def apply():
                 return redirect(url_for('home'))
     return render_template('applicationform.html')
 
-@app.route('/applicantList')
-def applicantList():
+@app.route('/print')
+def print():
     data, keys, values = ([], [], [])
     user = None
+    fullList = ""
 
     if postSession == '':
         user = db.applicants.find({})
     else:
         user = db.applicants.find({"post":postSession})
+    
+    if user is not None:
+        for i in user:
+            keys = list(i.keys())
+            values = list(i.values())
+            dictionary = dict(zip(values, keys))
 
-    for i in user:
-        keys = list(i.keys())
-        values = list(i.values())
-        dictionary = dict(zip(values, keys))
+            data.append(collections.OrderedDict(map(reversed, dictionary.items())))
 
-        data.append(collections.OrderedDict(map(reversed, dictionary.items())))
+        df = pd.DataFrame(data)
+        df = df.drop(["_id", "curriculum vitae", "status", "email", "awarding institute", "post"], axis=1)
+        df.index += 1
+        pd.set_option("max_colwidth", 1000)
+        df.style.set_properties( **{'width': '1300px'})
 
-    df = pd.DataFrame(data)
-    df = df.drop(["_id", "curriculum vitae", "status", "email", "awarding institute", "post", "post description"], axis=1)
-    df.index += 1
-    pd.set_option("max_colwidth", 1000)
-    df.style.set_properties( **{'width': '1300px'})
+        fullList = df.to_html(classes="table table-striped table-hover")
 
-    fullList = df.to_html(classes="table table-striped table-hover")
     path, file = ('','')
     if postSession == '':
         path = 'templates/applicantList/fullList/applicantlist.html'
@@ -362,13 +367,40 @@ def applicantList():
     with open(path, 'w') as myfile:
         myfile.write('''{% extends "list.html" %}
                         {% block title %} Full Applicant List {% endblock %}
-                        {% block heading %} Applicant List {% endblock %}
+                        <img src="../static/img/hitlogo1.png" alt=""> {% block heading %} <span>   Applicant List  </span>
+                        <button class="nav-bar btn" style="color: gold;" onclick="print()" target="_blank"><b>Print List</b></button></a> {% endblock %}
                         {% block content %}
                         ''')
         myfile.write(fullList)
         myfile.write('{% endblock %}')
 
     return render_template(file)
+
+@app.route('/applicantList')
+def applicantList():
+    data= []
+    user = None
+    count = []
+    cv_url = []
+
+    app.jinja_env.globals.update(zip=zip)
+    if postSession == '':
+        user = db.applicants.find({})
+    else:
+        user = db.applicants.find({"post":postSession})
+
+    for i in user:
+        dictionary = []
+        values = []
+        values = list(i.values())
+        dictionary = values.copy()
+        
+        cv_url.append(url_for('cv', token = values[1], idToken = values[5], postToken = values[-2] , _external = False))
+        
+        data.append(dictionary)
+        count.append(len(data))
+
+    return render_template("list.html", table=data, count=count, cvs=cv_url )
 
 @app.route('/login', methods=('GET', 'POST'))
 def login():
@@ -401,7 +433,7 @@ def editVacancy():
     query = db.Vacancies.find_one({"post":post})
 
     posts = []
-    posts.extend((query['post'], query['department'], "\r\n".join(query['minimum requirements']), "\r\n".join(query['responsibilities']), (query['deadline']).date()))
+    posts.extend((query['post'], query['post description'], query['department'], "\r\n".join(query['minimum requirements']), "\r\n".join(query['responsibilities']), (query['deadline']).date()))
 
     if request.method == 'POST':
 
@@ -414,7 +446,7 @@ def editVacancy():
             c.append(int(i))
 
         deadline = datetime(c[0], c[1], c[2], 11, 59, 59)
-
+        description = request.form.get('post description')
         requirements = (request.form.get('requirement').split('\r\n'))
         responsibilities = (request.form.get('responsibilities').split('\r\n'))
 
@@ -475,11 +507,11 @@ def viewCV():
 
     path = "static/CVs/"
     try:
-        with open('{}{}-{}-{}.pdf'.format(path, nameSession, idSession, post), 'wb') as f:
+        with open('{}{}-{}-{}.pdf'.format(path, nameSession, idSession, post), 'xb') as f:
             f.write(file)
        
-    except Exception:
-        raise Exception
+    except FileExistsError:
+        return redirect(url_for('static', filename='CVs/{}-{}-{}.pdf'.format(nameSession, idSession, post)))
 
     return redirect(url_for('static', filename='CVs/{}-{}-{}.pdf'.format(nameSession, idSession, post)))
 

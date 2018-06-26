@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Edit Vacancy</title>
 </head>
+
 <body>
     <div class="nav-bar">
         <span> <a href="{{url_for('humanResourceHome')}}"> <i class="material-icons md-48">arrow_back</i> </a> </span>
@@ -23,50 +25,55 @@
 
     <div class="wrapper">
         <form action="{{url_for('editVacancy')}}" method=POST>
-                <div class="detail-group">
-                    <h3>Vacancy Details</h3>
-                    <div class="details">
-                        <table>
-                            <tr>
-                                <td> <label for="post">Post: </label> </td>
-                                <td>  <input type="text" name="post" id="" placeholder="{{post[0]}}"  required readonly> </td>
-                            </tr>
-                            <tr>
-                                <td> <label for="department">Department: </label> </td>
-                                <td> <input type="text" name="department" id="" placeholder="{{post[1]}}" required readonly>  </td>
-                            </tr>
-                            <tr>
-                                <td style="vertical-align: top"> Minimum Requirements: </td>
-                                <td> <textarea name="requirement" id="" cols="100" rows="10">{{post[2]}}</textarea>  </td>
-                            </tr>
-                            <tr>
-                                <td style="vertical-align: top"> Responsibilities: </td>
-                                <td> <textarea name="responsibilities" id="" cols="100" rows="10">{{post[3]}}</textarea> </td>
-                            </tr>
-                        </table>
-
-                    </div>
-                </div>
-                <div class="detail-group">
-                    <h3>Vacancy Dates</h3>
-                    <div class="details">
-                        <table id='specialdates'>
-                          <tr>
-                              <td> <label for="deadline">Proposed Deadline: </label> </td>
-                              <td> <input type="date" name="deadline" id="" value="{{post[4]}}" required> </td>
-                          </tr>
-                        </table>
-                </div>
+            <div class="detail-group">
+                <h3>Vacancy Details</h3>
+                <div class="details">
+                    <table>
+                        <tr>
+                            <td> <label for="post">Post: </label> </td>
+                            <td> <input type="text" name="post" id="" placeholder="{{post[0]}}" readonly> </td>
+                        </tr>
+                        <tr>
+                            <td> <label for="post description">Post Description: </label> </td>
+                            <td> <input type="text" name="post description" id="" placeholder="{{post[1]}}" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> <label for="department">Department: </label> </td>
+                            <td> <input type="text" name="department" id="" placeholder="{{post[2]}}" readonly> </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top"> Minimum Requirements: </td>
+                            <td> <textarea name="requirement" id="" cols="100" rows="10">{{post[3]}}</textarea> </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top"> Responsibilities: </td>
+                            <td> <textarea name="responsibilities" id="" cols="100" rows="10">{{post[4]}}</textarea> </td>
+                        </tr>
+                    </table>
 
                 </div>
-                <button class="button submit-button" type="submit"> Complete Edit </button>
+            </div>
+            <div class="detail-group">
+                <h3>Vacancy Dates</h3>
+                <div class="details">
+                    <table id='specialdates'>
+                        <tr>
+                            <td> <label for="deadline">Proposed Deadline: </label> </td>
+                            <td> <input type="date" name="deadline" id="" value="{{post[5]}}" required> </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <button class="button submit-button" type="submit"> Complete Edit </button>
         </form>
     </div>
 </body>
 
 <script>
-     // function to add dynamically add fields to adjudicators
-    function addAdjudicatorField(){
+    // function to add dynamically add fields to adjudicators
+    function addAdjudicatorField() {
         var numberOfAdjudicator = document.getElementById('numberOfAdjudicator')
         numberOfAdjudicator.value = Number(numberOfAdjudicator.value) + 1
         var button = document.getElementById('add')
@@ -83,11 +90,11 @@
         cloneElement.childNodes[1].childNodes[2].childNodes[3].childNodes[1].name = "email" + fieldNumbers
         cloneElement.childNodes[1].childNodes[4].childNodes[3].childNodes[1].name = "adjudicatorpost" + fieldNumbers
         cloneElement.childNodes[1].childNodes[6].childNodes[3].childNodes[1].name = "adjudicatordepartment" + fieldNumbers
-        adjudicator.insertBefore(cloneElement,button)
+        adjudicator.insertBefore(cloneElement, button)
     }
 
-    function removeAdjudicatorField(){
-        try{
+    function removeAdjudicatorField() {
+        try {
             var numberOfAdjudicator = document.getElementById('numberOfAdjudicator')
             numberOfAdjudicator.value = Number(numberOfAdjudicator.value) - 1
             var adjudicator = document.getElementById('adjudicator')
@@ -95,11 +102,10 @@
             var childName = 'afield' + fieldNumbers
             var child = document.getElementById(childName)
             adjudicator.removeChild(child)
-        } catch(e){
+        } catch (e) {
             alert('There Must Be At Least One Field')
         }
     }
-
 </script>
 
 
