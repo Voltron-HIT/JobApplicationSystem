@@ -54,14 +54,31 @@ def smss(sendTo):
 	message = client.messages.create(body='Hello there!',from_=smsConfig.twilioNumber,to='+263784428853')
 	return message.sid
 
-@app.route('/')
-@app.route('/home')
+
+@app.route('/', methods=('GET', 'POST'))
+@app.route('/home', methods=('GET', 'POST'))
 def home():
     global postSession
     postSession = ""
     status = None
-    post = db.Vacancies.find()
-    vac = []
+    post = ""
+    app.jinja_env.globals.update(zip=zip)
+
+    depts = db.Vacancies.find({}, {'department':'1'})
+    departments, totals, vac = ([], [], [])
+
+    for i in depts:
+        departments.append(i['department'])
+    departments = list(set(departments)).copy()
+
+    for i in departments:
+        totals.append(db.Vacancies.find({'department':i}).count())
+    
+    if request.method == 'POST':
+        department = request.form.get('department')
+        post = db.Vacancies.find({'department':department})
+    else:
+        post = db.Vacancies.find()
 
     for i in post:
         position = i['post']
@@ -78,9 +95,8 @@ def home():
             vac.append((position, minimum_requirements, responsibilities, apply_url, description))
         else:
             status = "Expired Vacancy"
-
-    return render_template('index.html', post=vac)
-
+   
+    return render_template('index.html', post=vac,depts=departments, totals=totals )
 
 @app.route('/humanResourceHome')
 @login_required
@@ -307,9 +323,8 @@ def apply():
 
         if cv != "" or cv is not None:
             comments = "CV & Certificates attached"
-
-        #applyFor = post
-        status = "new"
+        else:
+            comments = "CV not attached"
 
         for i in range(1, int(request.form.get('numberOfQualifications')) + 1):
             qualifications += "{}. ".format(str(i)) + request.form.get('qualification{}'.format(i)) + ". "
@@ -319,8 +334,8 @@ def apply():
 
             user = db.applicants.find_one({'National_id':request.form.get('nationalid'), 'post':postSession})
 
-            if user == None :
-                db.applicants.insert({'name':name, 'contact details':contacts, 'sex':sex, 'age':age,'National_id':request.form.get('nationalid'), 'academic qualifications':qualifications, 'awarding institute':institution, 'work experience':workexperience, 'curriculum vitae':cv, 'comments':comments, 'status':status
+            if user is None :
+                db.applicants.insert({'name':name, 'contact details':contacts, 'sex':sex, 'age':age,'National_id':request.form.get('nationalid'), 'academic qualifications':qualifications, 'awarding institute':institution, 'work experience':workexperience, 'curriculum vitae':cv, 'comments':comments, 'status':'new'
                 , 'post':postSession, 'email':email})
                 flash('Application For Vacancy Was Successful')
             else:
@@ -351,7 +366,7 @@ def print():
         df = df.drop(["_id", "curriculum vitae", "status", "email", "awarding institute", "post"], axis=1)
         df.index += 1
         pd.set_option("max_colwidth", 1000)
-        df.style.set_properties( **{'width': '1300px'})
+        df.style.set_properties( **{'width': '1500px'})
 
         fullList = df.to_html(classes="table table-striped table-hover")
 
