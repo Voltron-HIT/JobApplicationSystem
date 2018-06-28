@@ -5,7 +5,6 @@ import collections
 import smsConfig
 import emailConfig
 import re
-import docx
 import subprocess
 from bson import Binary
 from functools import wraps
