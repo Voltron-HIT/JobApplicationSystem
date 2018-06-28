@@ -13,8 +13,14 @@
 
     <style>
         :root {
+            --hit-blue-light: #304fce;
+            --hit-yellow-light: #e6b84d;
             --hit-blue: #00135d;
             --hit-yellow: #ffb400;
+        }
+
+        :root{
+            --light-blue: #00135d;
         }
 
         .font {
@@ -62,19 +68,21 @@
             color: var(--hit-blue) !important;
         }
 
-        .item:hover {
-            cursor: pointer;
-        }
 
-        .thing:hover {
-            background-color: var(--hit-yellow);
-            color: var(--hit-blue) !important;
+        a.thing:hover {
+            cursor: pointer;
+            background-color: var(--hit-yellow-light);
         }
 
         .card {
             margin-top: 12px;
             border-color: var(--hit-blue);
-            height: 229px !important;
+            /* height: 229px !important; */
+        }
+
+        .card-header {
+            background-color: var(--light-blue);
+            color: var(--hit-yellow);
         }
 
         .btn-color-dark{
@@ -87,6 +95,14 @@
             background-color: var(--hit-blue);
             color: var(--hit-yellow);
         }
+        
+        button.btn-color-dark{
+            text-align: left;
+        }
+        
+        button.btn-color-dark:hover{
+            background: rgba(255, 255, 255, 0.2);
+        }
 
         .card-header {
             border-color: var(--hit-blue)
@@ -96,29 +112,25 @@
             border-color: var(--hit-yellow);
             color: var(--hit-yellow);
         }
+    
+        .material-icons{
+            font-size: 48px !important;
+        }
+
     </style>
 
 
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-light top-border-color bottom-border-color fore-color">
+    <nav class="navbar navbar-expand-lg bg-light top-border-color bottom-border-color fore-color nav-justified">
         <span class="navbar-brand">
             <img class="logo-height" src="../static/img/hitlogo1.png" alt="">
         </span>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <i class="material-icons md-48">menu</i>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link" href="{{url_for('home')}}">Home
-                    <span class="sr-only">(current)</span>
-                </a>
-                <a class="nav-item nav-link" href="{{url_for('login')}}">Log In</a>
-            </div>
+        <div class="navbar-nav ml-auto" id="thing">
+            <i class="material-icons md-48">menu</i>
         </div>
 
     </nav>
@@ -131,60 +143,40 @@
     </div>
     {% endif %}
     {% endwith %}
-    <div id="wrapper">
+    <div id="wrapper" class="toggled">
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <span>Available Vacancies</span>
                 </li>
                 <li>
-                    <a class="item">Finance Department
-                        <span class="badge badge-pill badge-color">4 Vacancies</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="item">Information Technology
-                        <span class="badge badge-color">4 Vacancies</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="item">Software Engineering
-                        <span class="badge badge-color">4 Vacancies</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="item">Administration
-                        <span class="badge badge-color ">4 Vacancies</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="item">Student Affairs
-                        <span class="badge badge-color ">4 Vacancies</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="item">Food Processing
-                        <span class="badge badge-color ">4 Vacancies</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="itemthing">How To Apply
+                    <a class="thing">How To Apply
                         <span class="badge badge-color "></span>
                     </a>
                 </li>
+                {% for i, j in zip(depts, totals) %}
+                <li>
+                    <form style="text-align: left" action="{{url_for('home')}}" method=POST>
+                        <button class="item btn btn-block btn-color-dark" name="department" value="{{i}}" type="submit">{{i}}
+                        <span class="badge badge-pill badge-color">{{j}}</span>
+                    </button>
+
+                    </form>
+                </li>
+                {% endfor %}
             </ul>
 
         </div>
         <div id="page-content-wrapper">
             <div class="container-fluid row">
-                <div class="col-md-1 col-sm-2">
+                <!-- <div class="col-md-1 col-sm-2">
                     <a href="#menu-toggle" class="btn btn-dark" id="menu-toggle">
                         <span class="material-icons float-left ">more_vert</span> Filter </a>
-                </div>
+                </div> -->
 
-                <div class="col-md-11 col-sm-10 row">
+                <div class="col-md-12 col-sm-12 row">
                     {% for p in post %}
-                    <div class="col-md-4 col-sm-10 col-xs-10">
+                    <div class="col-md-6 col-sm-10 col-xs-10">
                         <div class="card">
                             <div class="card-header">
                                 <h4>{{p[0]}}</h4>
@@ -193,7 +185,7 @@
                                 <p class="card-text">{{p[4]}}</p>
                             </div>
                             <div class="card-footer">
-                                <a href="#" class="btn btn-outline btn-color" data-toggle="modal" data-target="#{{p[0]}}" >View Details</a>
+                                <a href="#" class="btn btn-outline btn-color-dark" data-toggle="modal" data-target="#{{p[0]}}" >View Details</a>
                             </div>
                         </div>
                     </div>
@@ -245,10 +237,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
     <script>
-        $("#menu-toggle").click(function (e) {
+        var th = $(window).width()
+        if (th < 728){
+            $("#wrapper").toggleClass("toggled");
+        }
+
+        $("#thing").click(function (e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
+            
         });
-    </script
+    </script>
 </body>
 </html>
