@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HIT Vacancy</title>
+    <link rel="stylesheet" href="../static/css/simple-sidebar.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Markazi+Text:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+         :root {
+            --hit-blue: #00135d;
+            --hit-yellow: #ffb400;
+        }
+        
+        .font {
+            font-family: 'Markazi Text', serif;
+            font-size: 32px;
+        }
+        
+        .logo-height {
+            height: 32px;
+        }
+        
+        .top-border-color {
+            border-top-color: var(--hit-blue);
+            border-top-width: 4px;
+            border-top-style: solid;
+        }
+        
+        .bottom-border-color {
+            border-bottom-color: var(--hit-yellow);
+            border-bottom-width: 2px;
+            border-bottom-style: solid;
+        }
+        
+        .fore-color {
+            color: var(--hit-blue);
+        }
+        
+        .navbar-toggler-icon {
+            color: var(--hit-blue);
+        }
+        
+        .nav-item {
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--hit-blue);
+        }
+        
+        .badge-color {
+            background-color: var(--hit-yellow);
+            color: var(--hit-blue);
+        }
+        
+        .thing {
+            background-color: var(--hit-yellow);
+            color: var(--hit-blue) !important;
+        }
+        
+        .item:hover {
+            cursor: pointer;
+        }
+        
+        .thing:hover {
+            background-color: var(--hit-yellow);
+            color: var(--hit-blue) !important;
+        }
+        
+        .card {
+            margin-top: 12px;
+            border-color: var(--hit-blue);
+        }
+        
+        .card-header {
+            border-color: var(--hit-blue)
+        }
+        
+        .btn-color {
+            border-color: var(--hit-yellow);
+            color: var(--hit-yellow);
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-light top-border-color bottom-border-color fore-color">
+        <span class="navbar-brand">
+            <img class="logo-height" src="../static/img/hitlogo1.png" alt="">
+        </span>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="material-icons md-48">menu</i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link" href="{{url_for('home')}}">Home
+                    <span class="sr-only">(current)</span>
+                </a>
+                <a class="nav-item nav-link" href="{{url_for('login')}}">Log In</a>
+            </div>
+        </div>
+
+    </nav>
+
+    <div class="alert alert-primary">
+        <!--  -->
+    </div>
+
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+
+
+
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <span>Available Vacancies</span>
+                </li>
+                {% for i, j in zip(depts, totals) %}
+                <li>
+                    <form action="{{url_for('home')}}" method=POST>
+                        <button class="item btn" style="background-color: transparent; border:none; color:#ffb400;" name="department" value="{{i}}" type="submit">{{i}}
+                        <span class="badge badge-pill badge-color">{{j}}</span>
+                    </button>
+
+                    </form>
+                </li>
+                {% endfor %}
+                <li>
+                    <a class="itemthing">How To Apply
+                        <span class="badge badge-color "></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+        <div id="page-content-wrapper">
+            <div class="container-fluid row">
+                <div class="col-md-1 col-sm-2">
+                    <a href="#menu-toggle" class="btn btn-dark" id="menu-toggle">
+                        <span class="material-icons float-left ">more_vert</span> Filter </a>
+                </div>
+
+                <div class="col-md-11 col-sm-10 row">
+                    {% for p in post %}
+                    <div class="col-md-4 col-sm-10 col-xs-10">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>{{p[0]}}</h4>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{p[4]}}</p>
+                                <a href="#" class="btn btn-outline btn-color" data-toggle="modal" data-target="#{{p[0]}}">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Modal -->
+            {% for p in post %}
+            <div class="modal fade" id="{{p[0]}}" tabindex="-1" role="dialog" aria-labelledby="fullPostModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="fullPostModalLabel">{{p[0]}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h5 class="modal-title">Minimum Requirements</h5>
+                            <p>
+                                {% for min in p[1] %}
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"> {{ min }} </li>
+                                </ul>
+                                {% endfor %}
+                            </p>
+                            <h5 class="modal-title">Responsibilities</h5>
+                            <p>
+                                {% for resp in p[2] %}
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"> {{ resp }} </li>
+                                </ul>
+                                {% endfor %}
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+</body>
+
+</html>
