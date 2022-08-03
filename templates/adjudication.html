@@ -1,44 +1,224 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Adjudication</title>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-	<header style="background: url(../static/img/hit-home-1.jpg) 100% no-repeat; background-size: cover;">
-	</header>
-	<nav>
-		<div>
-			<ul>
-				<li><a href="{{url_for('humanResourceHome')}}"><b>HOME</b></a></li>
-				<li><a href="{{url_for('addVacancy')}}" type="button"><b>ADD VACANCY</b></a></li>
-			</ul>
-		</div>
-	</nav>
-	<div class="space"> </div>
-	<div class="main-wrapper">
-		<table border="0" id="shortlist" class="table3000">
-			<tr>
-				<th class="first-col">Name</th>
-				<th>Post Applied For</th>
-				<th>Qualifications</th>
-				<th colspan="3" class="last-col">Scores</th>
-			</tr>
-			<tr>
-				<td colspan="3"></td>
-				<th>Knowledge</th>
-				<th>Fluency</th>
-				<th>Confidence</th>
-			</tr>
-			<tr>
-				<td>Anesu</td>
-				<td>Lecturer</td>
-				<td>5 'O' Levels, 3 'A' Levels</td>
-				<td><input type="text" name="knowledge-field"></td>
-				<td><input type="text" name="fluency-field"></td>
-				<td><input type="text" name="confidence-field"></td>
-			</tr>
-		</table>
-	</div>
-</body>
-</html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Adjudication</title>
+ 
+     <link rel="stylesheet" href="../static/new/css/bootstrap.css">
+ 
+     <link rel="stylesheet" href="../static/new/vendors/chartjs/Chart.min.css">
+    <link rel="stylesheet" href="../static/new/vendors/simple-datatables/style.css">
+     <link rel="stylesheet" href="../static/new/vendors/perfect-scrollbar/perfect-scrollbar.css">
+     <link rel="stylesheet" href="../static/new/css/app.css">
+     <link rel="shortcut icon" href="../static/img/hitlogo.png" type="image/x-icon">
+ </head>
+ 
+ <body>
+     <div id="app">
+         <div id="sidebar" class='active'>
+             <div class="sidebar-wrapper active">
+                 <div class="sidebar-header">
+                     <img src="{{url_for('static', filename='img/hitlogo.png')}}" height="200px" width="180px" >
+                 </div>
+                 <div class="sidebar-menu">
+                     <ul class="menu">
+ 
+ 
+                         <li class='sidebar-title'>Main Menu</li>
+ 
+ 
+ 
+                         <li class="sidebar-item">
+                             <a href="/humanResourceHome" class='sidebar-link'>
+                                 <i data-feather="home" width="20"></i>
+                                 <span>Dashboard</span>
+                             </a>
+ 
+                         </li>
+                         <li class="sidebar-item  ">
+                             <a href="{{url_for('addVacancy')}}" class='sidebar-link'>
+                                 <i data-feather="layers" width="20"></i>
+                                 <span>Add Vacancy</span>
+                             </a>
+ 
+                         </li>
+                         <li class="sidebar-item  active">
+                             <a href="{{url_for('manageposts')}}" class='sidebar-link'>
+                                 <i data-feather="briefcase" width="20"></i>
+                                 <span>Manage Vacancies</span>
+                             </a>
+ 
+                         </li>
+                         <li class="sidebar-item  ">
+                            <a href="{{url_for('department')}}" class='sidebar-link'>
+                                <i data-feather="briefcase" width="20"></i>
+                                <span>Manage Department</span>
+                            </a>
+
+                        </li>
+ 
+ 
+ 
+   
+                        
+ 
+ 
+                     </ul>
+                 </div>
+                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+             </div>
+         </div>
+         <div id="main">
+             <nav class="navbar navbar-header navbar-expand navbar-light">
+                 <a class="sidebar-toggler" href="#"><span class="navbar-toggler-icon"></span></a>
+                 <button class="btn navbar-toggler" type="button" data-bs-toggle="collapse"
+                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                     aria-expanded="false" aria-label="Toggle navigation">
+                     <span class="navbar-toggler-icon"></span>
+                 </button>
+                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                     <ul class="navbar-nav d-flex align-items-center navbar-light ms-auto">
+                         
+                       
+                         <li class="dropdown">
+                             <a href="#" data-bs-toggle="dropdown"
+                                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                 <div class="avatar me-1">
+                                     <img src="assets/images/avatar/avatar-s-1.png" alt="" srcset="">
+                                 </div>
+                                 <div class="d-none d-md-block d-lg-inline-block">Hi, Saugi</div>
+                             </a>
+                             <div class="dropdown-menu dropdown-menu-end">
+                                 <!-- <a class="dropdown-item" href="#"><i data-feather="user"></i> Account</a>
+                                 <a class="dropdown-item active" href="#"><i data-feather="mail"></i> Messages</a>
+                                 <a class="dropdown-item" href="#"><i data-feather="settings"></i> Settings</a>
+                                 <div class="dropdown-divider"></div> -->
+                                 <a class="dropdown-item" href="/logout"><i data-feather="log-out"></i> Logout</a>
+                             </div>
+                         </li>
+                     </ul>
+                 </div>
+             </nav>
+ 
+             <div class="main-content container-fluid">
+                 <div class="page-title">
+                     <h3>Adjudication for {{depart}} & post {{post}}</h3>
+                                </div>
+                 <section class="section">
+                    
+                     <div class="row mb-4">
+                         <div class="col-md-12">
+                         
+                             <div class="card">
+                                 <div class="card-header d-flex justify-content-between align-items-center">
+                                     <h4 class="card-title">Manage Adjudicators</h4>
+                                     <a href="{{url_for('addadjudication')}}" class="btn btn-primary me-1 mb-1">Add Adjudicator</a>
+                                    
+                                 </div>
+                                 <div class="card-body px-0 pb-0">
+                                     <div class="table-responsive">
+                                         <table class='table table-striped' id="table1">
+                                             <thead>
+                                                 <tr>
+                                                     <th>Fullname</th>
+													 <th>Position</th>
+													 <th>Email</th>         
+                                                     <th>Action</th>
+                                                 </tr>
+                                             </thead>
+                                             <tbody>
+                                                 {% for i in adj %}
+                                                 <tr>
+                                                     <td>{{i.fullname}}</td>
+													 <td>{{i.position}}</td>
+													 <td>{{i.email}}</td>
+                                                     <td> <a href="/deldepart/{{i.department}}" class="btn btn-danger me-1 mb-1">Delete</a></td>
+                                                 </tr>
+                                                 {% endfor%}
+                                                
+                                             </tbody>
+                                
+							 
+							          </table>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+					
+          
+                     </div>
+					 
+                 </section>
+
+				 <section class="section">
+                    
+					<div class="row mb-4">
+						<div class="col-md-12">
+						
+							<div class="card">
+								<div class="card-header d-flex justify-content-between align-items-center">
+									<h4 class="card-title">Manage Adjudication Fields</h4>
+									<a href="{{url_for('addfield')}}" class="btn btn-primary me-1 mb-1">Add Adjudication fields</a>
+								   
+								</div>
+								<div class="card-body px-0 pb-0">
+									<div class="table-responsive">
+										<table class='table table-striped' id="table1">
+											<thead>
+												<tr>
+													<th>Fieldname</th>
+												        
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												{% for i in field %}
+												<tr>
+													<td>{{i.field}}</td>
+													<td> <a href="/deldepart/{{i.department}}" class="btn btn-danger me-1 mb-1">Delete</a></td>
+												</tr>
+												{% endfor%}
+											   
+											</tbody>
+							   
+							
+									 </table>
+									</div>
+								</div>
+							</div>
+						</div>
+				   
+		 
+					</div>
+					
+				</section>
+
+
+				
+                    
+			
+				
+				 
+             </div>
+ 
+             <footer>
+                
+             </footer>
+         </div>
+     </div>
+     <script src="../static/new/js/feather-icons/feather.min.js"></script>
+     <script src="../static/new/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+     <script src="../static/new/js/app.js"></script>
+ 
+     <script src="../static/new/vendors/chartjs/Chart.min.js"></script>
+     <script src="../static/new/vendors/apexcharts/apexcharts.min.js"></script>
+     <script src="../static/new/js/pages/dashboard.js"></script>
+ 
+     <script src="../static/new/vendors/simple-datatables/simple-datatables.js"></script>
+     <script src="../static/new/js/vendors.js"></script>
+     <script src="../static/new/js/main.js"></script>
+ </body>
+ 
+ </html>

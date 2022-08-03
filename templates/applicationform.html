@@ -6,136 +6,168 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>HIT Application</title>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro" rel="stylesheet">
-    <link rel="stylesheet" href="../static/applicationstyle.css">
-    <link rel="shortcut icon" href="../static/favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../static/new/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/new/vendors/quill/quill.bubble.css">
+   <link rel="stylesheet" href="../static/new/vendors/quill/quill.snow.css">
+
+    <link rel="stylesheet" href="../static/new/vendors/chartjs/Chart.min.css">
+   <link rel="stylesheet" href="../static/new/vendors/simple-datatables/style.css">
+    <link rel="stylesheet" href="../static/new/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="../static/new/css/app.css">
+    <link rel="shortcut icon" href="../static/img/hitlogo.png" type="image/x-icon">
 </head>
 
 <body>
-    <nav class="navbar nav-bar" style>
-        <span> <a href="{{url_for('home')}}"> <i class="material-icons md-48">arrow_back</i> </a> </span>
-    </nav>
-
-    <center class="heading">
-        <img src="../static/img/hitlogo1.png" alt="">
-        <span> Harare Institute Of Technology Job Application Form </span>
-    </center>
-
-    <div class="container col-md-12 col-lg-12 col-sm-12 wrapper">
-        <form action="{{url_for('apply')}}" method=POST id="applicationForm" enctype="multipart/form-data">
-            <div class="detail-group">
-                <h3>Personal Information</h3>
-                <div class="details">
-                    <div class="form-row">
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label for="firstname">Firstname: </label>
+   
+      <div class="row justify-content-center">
+      <div class="col-md-11">
+        <div class="card">
+            <div class="card-header">
+                <center class="heading">
+                    <img src="../static/img/hitlogo1.png" alt="Logo" height="100px" width="100px" >
+                    <h4> Harare Institute Of Technology Job Application Form for <strong>{{title}}</strong> </h4>
+                </center>
+            </div>
+            <form action="{{url_for('apply')}}" method=POST id="applicationForm" enctype="multipart/form-data">
+            <div class="card-body">
+               <strong> <h3>PERSONAL INFORMATION</h3></strong>
+               <input class="form-control" name="title" value="{{title}}" type="text"  hidden>
+               <input class="form-control" name="department" value="{{department}}" type="text"  hidden>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="basicInput">Firstname</label>
                             <input class="form-control" name="firstname" id="firstname" type="text" required placeholder="John">
-                            <div class="invalid-tooltip">
-                                Input Firstname
-                            </div>
                         </div>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label for="surname">Surname: </label>
-                            <input class="form-control" name="surname" id="surname" type="text" required placeholder="Doe">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-12">
-                            <label for="nationalid">National ID: </label>
+
+                        <div class="form-group">
+                            <label for="helpInputTop">National Id</label>
                             <input class="form-control" name="nationalid" type="text" id="nationalid" required placeholder="22-345345X234-P">
                         </div>
+
+                        <div class="form-group col-md-4 col-sm-8">
+                            <label for="helperText">Marital Status</label>
+                            <select  class="form-select" id="basicSelect" name="maritalstatus" >
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Widow">Widow</option>
+                                <option value="Other">Other</option>
+                        </select>
+                        </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-6">
-                            <label for="DOB">Date Of Birth:</label>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="disabledInput">Surname</label>
+                            <input class="form-control" name="surname" id="surname" type="text" required placeholder="Doe">
+                        </div>
+                        <div class="form-group col-md-4 col-sm-8">
+                            <label for="disabledInput">Date of Birth</label>
                             <input class="form-control" name="DOB" id="dob" type="date" required data-toggle="popover" data-placement="top" data-content="Please Input A Valid Date Of Birth">
                         </div>
-                        <div class="form-group col-md-2 col-sm-4">
-                            <label for="Sex">Sex:</label>
-                            <select class="form-control" name="sex" id="sex">
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                </select>
+                        <div class="form-group col-md-3 col-sm-6">
+                            <label for="helperText">Sex</label>
+                            <select  class="form-select" id="basicSelect" name="sex" >
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                        </select>
                         </div>
+
                     </div>
                 </div>
-            </div>
-            <div class="detail-group">
-                <h3>Contact Information</h3>
-                <div class="details">
-                    <div class="form-row">
-                        <div class="form-group col-6">
-                            <label for="email">Email: </label>
+                <br>
+                <strong> <h3>CONTACT INFORMATION</h3></strong>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group  ">
+                            <label for="basicInput">Email</label>
                             <input class="form-control" type="email" name="email" id="email" required placeholder="John@gmail.com" data-toggle="popover" data-placement="top" data-content="Please Input A Valid Email Address">
                         </div>
+
+                        <div class="form-group">
+                            <label for="helpInputTop">Address</label>
+                            <textarea class="form-control" name="address" rows="3"></textarea>
+                        </div>
+
+                      
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-6">
-                            <label for="phone1">Phone 1: </label>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="disabledInput">Phone Number</label>
                             <input class="form-control" type="text" name="phone1" id="phone1" required placeholder="0772334661">
                         </div>
-                        <div class="form-group col-6">
-                            <label for="phone2">Phone 2: </label>
-                            <input class="form-control" type="text" name="phone2" id="phone2" placeholder="0772334661">
-                        </div>
+                       
 
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-12">
-                            <label for="address">Address:</label>
-                            <input class="form-control" type="text" name="address" id="" placeholder="46 Hughes Harare">
+                </div>
+                <br>
+
+                <strong> <h3>QUALIFICATION</h3></strong>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <div class="details" id="qualification">
+                            <div class="field" id="qfield">
+                                
+                                <label for="qualification">Qualification </label>
+                                <input  class="form-control" required name="qualification1" type="text" id="qualification1" placeholder="5 O levels including English and Maths">
+                               
+                                <label for="awardingInstitute">Awarding Institute </label>
+                                <input  class="form-control"required name="awardingInstitute1" id="awardingInstitute1" type="text" placeholder="ZIMSEC">
+
+                                <label for="year">Year </label>
+                                <input  class="form-control"required name="year1" id="year1" type="text" placeholder="1992">
+                                <br>
+                                <input type="text" name="numberOfQualifications" value="1" id="numberOfQualifications" style="display:None">
+                            </div>
+                            
+                            <button class="btn btn-success btn-sm" id="addqualification" onclick="addQualificationField()">Add Another</button>
+                            <button class="btn btn-danger btn-sm" id="removequalification" onclick="removeQualificationField()">Remove</button>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="detail-group">
-                <h3>Academic Qualification</h3>
-                <div class="details" id="qualification">
-                    <div class="field" id="qfield">
-                        <label for="qualification">Qualification: </label>
-                        <input style="padding: 10px" required name="qualification1" type="text" id="qualification1" placeholder="5 O levels including English and Maths">
-                        <label for="awardingInstitute">Awarding Institute: </label>
-                        <input style="padding: 10px" required name="awardingInstitute1" id="awardingInstitute1" type="text" placeholder="ZIMSEC">
-                        <input type="text" name="numberOfQualifications" value="1" id="numberOfQualifications" style="display:None">
                     </div>
-                    <span class="button" id="addqualification" onclick="addQualificationField()">Add Another</span>
-                    <span class="button" id="removequalification" onclick="removeQualificationField()">Remove</span>
                 </div>
-            </div>
-            <div class="detail-group">
-                <h3>Work Experience</h3>
-                <div class="details" id="workexperience">
-                    <div class="field" id="wfield">
-                        <label for="organisation">Organisation: </label>
-                        <input style="padding: 10px" name="organisation1" id="organisation1" type="text" value="{{ request.form.organisation }}" placeholder="Harare Institute Of Technology">
-                        <label for="position">Position: </label>
-                        <input style="padding: 10px" name="position1" id="position1" type="text" value="{{ request.form.position }}" placeholder="Receptionist">
-                        <label for="timeframe">Period: </label>
-                        <input style="padding: 10px" name="timeframe1" id="timeframe1" type="text" value="{{ request.form.timeframe }}" placeholder="2000-2002">
-                        <input type="text" style="display:None" name="numberOfWorkExperiences" value="1" id="numberOfWorkExperiences">
-                    </div>
 
-                    <span class="button" id="add" onclick="addWorkExperienceField()">Add Another</span>
-                    <span class="button" id="removeWorkExperienceField" onclick="removeWorkExperienceField()">Remove</span>
+                
+                <strong> <h3>WORK EXPERIENCE</h3></strong>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="details" id="workexperience">
+                                <div class="field" id="wfield">
+                                    <label for="organisation">Organisation </label>
+                                    <input class="form-control" name="organisation1" id="organisation1" type="text"  placeholder="Harare Institute Of Technology" required>
+                                    <label for="position">Position </label>
+                                    <input class="form-control" name="position1" id="position1" type="text"  placeholder="Receptionist" required>
+                                    <label for="timeframe">Period </label>
+                                    <input class="form-control" name="timeframe1" id="timeframe1" type="text"  placeholder="2000-2002"required><br>
+                                    <input type="text" style="display:None" name="numberOfWorkExperiences" value="1" id="numberOfWorkExperiences">
+                                </div>
+            
+                                <button class="btn btn-success btn-sm" id="add" onclick="addWorkExperienceField()">Add Another</button>
+                                <button class="btn btn-danger btn-sm" id="removeWorkExperienceField" onclick="removeWorkExperienceField()">Remove</button>
+                            </div>
+                    </div>
+                    </div>
                 </div>
-            </div>
-            <div class="detail-group">
-                <h3>Curriculum Vitae</h3>
+
+                <h3>CURRICULUM VITAE</h3>
                 <div class="details">
                     <label for="cv">( Attach Curriculum Vitae With All Necessary Certificates )</label>
-                    <input class="form-control-file" type="file" name="cv" id="cv" required data-toggle="popover" data-placement="top" data-content="Please Attach A pdf or word document with for CV">
+                    <input class="form-control-file" type="file" name="file[]" id="cv" required data-toggle="popover" data-placement="top" data-content="Please Attach A pdf or word document with for CV" accept="application/pdf" multiple>
 
                 </div>
             </div>
-
-            <button class="button submit-button" type="submit">Apply</button>
-
+            <div class="col-md-12">
+            <button class="btn btn-success  col-md-12">Apply Now</button>
+        
+            </div>
+            <br>
         </form>
+        </div>
+ 
     </div>
+</div>
 
-    <!--  Response Message Modal -->
     <div class="modal" id="response" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -153,7 +185,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 
 
 </body>

@@ -1,50 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
 
-		<meta charset="utf-8">
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
 
-		<title>Admin-Login</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<!-- Bootstrap -->
-    	<link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <title>Admin-Login</title>
 
-    	<!-- Stylesheet -->
-    	<link rel="stylesheet" type="text/css" href="../static/css/admin_login.css">
+    <!-- Bootstrap -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
-	</head>
-	<body>
-		<div class="h-100 row align-items-center">
-			<div class="col-md-10 col-sm-10 col-xs-10">
-	          <div class="row text-center">	            
-	            <img src="img/hitlogo.png" alt="hit logo" class="img-thumbnail">
-	            <div class="col-6 mb-3">
-	              <div class="card">
-	                <div class="card-body text-center">
-	                  <form method="post" action="">
-						<center><img src="{{url_for('static', filename='img/hitlogo.png')}}" alt="" srcset="" height="120px" width="300px"></center>
-						<div class="form-group">
-							<label for="usernameInput">Username</label>
-							<input type="text" name="username" required placeholder="Username">
-						</div>
-						<div class="form-group">
-							<label for="passwordInput">Password</label>
-							<input type="password" name="password" required placeholder="Password">
-						</div>
-						<span class="invalid-feedback"><label class="text-danger">{{Error_Message}}</label></span>
-						<button class="btn" type="submit">Log In</button>
-					</form>
-					<a href="{{url_for('resetPassword')}}"> Forgot Password?</a>
-	                </div>
-	              </div>
-	            </div>    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="../static/css/admin_login.css">
 
-	          </div>       
-	        </div>
+</head>
+
+<body background="hit-bg.jpg">
+    <div class="container">
+        <div class="h-100 row align-items-center">
+            <div class="col-md-10 col-sm-10 col-xs-10">
+                <div class="row text-center">
+                    <div class="col-6 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <form method="post" action="">
+                                    <center><img src="../static/img/hitlogo.png" alt="" srcset=""></center>
+                                    <br>
+                                    <div class="form-group">
+                                        <label for="usernameInput"><h2>Username</h2></label>
+                                        <input type="text" name="username" required placeholder="Username" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="passwordInput"><h2>Password</h2></label>
+                                        <input type="password" name="password" required placeholder="Password" class="form-control">
+                                    </div>
+                                    <span class="invalid-feedback"><label class="text-danger">{{Error_Message}}</label></span>
+                                    <button class="btn" type="submit">Log In</button>
+                                </form>
+                                <a href="{# url_for('resetPassword') #}"> Forgot Password?</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+    </div>
 
-		
-	</body>
+</body>
+
 </html>

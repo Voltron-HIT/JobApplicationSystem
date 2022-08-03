@@ -1,118 +1,192 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro" rel="stylesheet">
-    <link rel="stylesheet" href="../static/applicationstyle.css">
-    <link rel="stylesheet" href="../static/addvacancystyle.css">
-    <link rel="shortcut icon" href="..\static\favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Add Vacancy</title>
-</head>
 
-<body>
-    <div class="nav-bar">
-        <span> <a href="{{url_for('humanResourceHome')}}"> <i class="material-icons md-48">arrow_back</i> </a> </span>
-    </div>
 
-    <div class="heading">
-        <img src="../static/img/hitlogo1.png" alt="">
-        <span> Add Vacancy </span>
-    </div>
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Add Vacancy</title>
+ 
+     <link rel="stylesheet" href="../static/new/css/bootstrap.css">
+     <link rel="stylesheet" href="../static/new/vendors/quill/quill.bubble.css">
+    <link rel="stylesheet" href="../static/new/vendors/quill/quill.snow.css">
 
-    <div class="wrapper">
-        <form action="{{url_for('addVacancy')}}" method=POST>
-            <div class="detail-group">
-                <h3>Vacancy Details</h3>
-                <div class="details">
-                    <table>
-                        <tr>
-                            <td> <label for="post">Post: </label> </td>
-                            <td> <input type="text" name="post" id="" placeholder="Lecturer" required> </td>
-                        </tr>
-                        <tr>
-                            <td> <label for="post description">Post Description: </label> </td>
-                            <td> <input type="text" name="post description" id="" placeholder="To supervise or assist with supervision of undergraduate, taught graduate (Masters)" required> </td>
-                        </tr>
-                        <tr>
-                            <td> <label for="department">Department: </label> </td>
-                            <td>
-                                <select name="department" id="">
-                                        <option value="Software Engineering">Software Engineering</option>
-                                        <option value="Finance Department">Finance Department</option>
-                                        <option value="Information Technology">Information Technology</option>
+     <link rel="stylesheet" href="../static/new/vendors/chartjs/Chart.min.css">
+    <link rel="stylesheet" href="../static/new/vendors/simple-datatables/style.css">
+     <link rel="stylesheet" href="../static/new/vendors/perfect-scrollbar/perfect-scrollbar.css">
+     <link rel="stylesheet" href="../static/new/css/app.css">
+     <link rel="shortcut icon" href="../static/img/hitlogo.png" type="image/x-icon">
+ </head>
+ 
+ <body>
+     <div id="app">
+         <div id="sidebar" class='active'>
+             <div class="sidebar-wrapper active">
+                 <div class="sidebar-header">
+                     <img src="{{url_for('static', filename='img/hitlogo.png')}}" height="200px" width="180px" >
+                 </div>
+                 <div class="sidebar-menu">
+                     <ul class="menu">
+ 
+ 
+                         <li class='sidebar-title'>Main Menu</li>
+ 
+ 
+ 
+                         <li class="sidebar-item  ">
+                             <a href="/humanResourceHome" class='sidebar-link'>
+                                 <i data-feather="home" width="20"></i>
+                                 <span>Dashboard</span>
+                             </a>
+ 
+                         </li>
+                         <li class="sidebar-item active ">
+                             <a href="{{url_for('addVacancy')}}" class='sidebar-link'>
+                                 <i data-feather="layers" width="20"></i>
+                                 <span>Add Vacancy</span>
+                             </a>
+ 
+                         </li>
+                         <li class="sidebar-item  ">
+                            <a href="{{url_for('manageposts')}}" class='sidebar-link'>
+                                <i data-feather="briefcase" width="20"></i>
+                                <span>Manage Vacancies</span>
+                            </a>
+
+                        </li>
+                        <li class="sidebar-item ">
+                            <a href="{{url_for('department')}}" class='sidebar-link'>
+                                <i data-feather="briefcase" width="20"></i>
+                                <span>Manage Department</span>
+                            </a>
+
+                        </li>
+
+                     </ul>
+                 </div>
+                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+             </div>
+         </div>
+         <div id="main">
+             <nav class="navbar navbar-header navbar-expand navbar-light">
+                 <a class="sidebar-toggler" href="#"><span class="navbar-toggler-icon"></span></a>
+                 <button class="btn navbar-toggler" type="button" data-bs-toggle="collapse"
+                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                     aria-expanded="false" aria-label="Toggle navigation">
+                     <span class="navbar-toggler-icon"></span>
+                 </button>
+                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                     <ul class="navbar-nav d-flex align-items-center navbar-light ms-auto">
+                         
+                       
+                         <li class="dropdown">
+                             <a href="#" data-bs-toggle="dropdown"
+                                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                 <div class="avatar me-1">
+                                     <img src="assets/images/avatar/avatar-s-1.png" alt="" srcset="">
+                                 </div>
+                                 <div class="d-none d-md-block d-lg-inline-block">Hi, Saugi</div>
+                             </a>
+                             <div class="dropdown-menu dropdown-menu-end">
+                                
+                                 <a class="dropdown-item" href="/logout"><i data-feather="log-out"></i> Logout</a>
+                             </div>
+                         </li>
+                     </ul>
+                 </div>
+             </nav>
+ 
+             <div class="main-content container-fluid">
+                 <div class="page-title">
+                     <h3>Add Vacancy</h3>
+                     <div class="col-md-12 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                            <div class="card-body">
+                                <form class="form form-horizontal" action="{{url_for('addVacancy')}}" method=POST>
+                                <div class="form-body">
+                                    <div class="row">
+                                    <div class="col-md-3">
+                                        <label>Post</label>
+                                    </div>
+                                    <div class="col-md-9 form-group">
+                                        <input type="text" id="post" class="form-control" name="post" placeholder="Lecturer" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Post Description</label>
+                                    </div>
+                                    <div class="col-md-9 form-group">
+                                        <textarea class="form-control" name="post description" rows="3"></textarea>  </div>
+
+                                    <div class="col-md-3">
+                                        <label>Department</label>
+                                    </div>
+                                    <div class="col-md-9 form-group">
                                         
-                                    </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align: top"> Minimum Requirements: </td>
-                            <td> <textarea name="requirement" id="" cols="100" rows="10"></textarea> </td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align: top"> Responsibilities: </td>
-                            <td> <textarea name="responsibilities" id="" cols="100" rows="10"></textarea> </td>
-                        </tr>
-                    </table>
+                                        <select  name="department" class="form-select" id="basicSelect">
+                                            {% for i in depart %}
+                                            <option value="{{i.department}}">{{i.department}} </option>  
+                                            {%  endfor %}                            
+                                        </select>  
+                                      
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Minimum Requirements</label>
+                                    </div>
+                                    <div class="col-md-9 form-group">
+                                        <textarea class="form-control" name="requirement" rows="7"></textarea>  </div>
 
-                </div>
-            </div>
-            <div class="detail-group">
-                <h3>Vacancy Dates</h3>
-                <div class="details">
-                    <table id='specialdates'>
-                        <tr>
-                            <td> <label for="deadline">Proposed Deadline: </label> </td>
-                            <td> <input type="date" name="deadline" id="" required> </td>
-                        </tr>
-                    </table>
-                </div>
+                                    
 
-                <button class="button submit-button" type="submit"> Post vacancy </button>
-        </form>
+                                    <div class="col-md-3">
+                                        <label>Responsibilities</label>
+                                    </div>
+                                    <div class="col-md-9 form-group">
+                                        <textarea class="form-control" name="responsibilities" rows="7"></textarea>  </div>
 
-        </div>
-</body>
+   
 
-<script>
-    // function to add dynamically add fields to adjudicators
-    function addAdjudicatorField() {
-        var numberOfAdjudicator = document.getElementById('numberOfAdjudicator')
-        numberOfAdjudicator.value = Number(numberOfAdjudicator.value) + 1
-        var button = document.getElementById('add')
-        var adjudicator = document.getElementById('adjudicator')
-        var fieldNumbers = adjudicator.childElementCount - 1;
-        var cloneElement = adjudicator.firstElementChild.cloneNode(true)
+                                    <div class="col-md-3">
+                                        <label>Proposed Deadline</label>
+                                    </div>
+                                    <div class="col-md-9 form-group">
+                                        <input type="date" class="form-control" name="deadline" required>  </div>
 
-        cloneElement.id = "afield" + fieldNumbers
-        cloneElement.childNodes[1].childNodes[0].childNodes[3].childNodes[1].value = ""
-        cloneElement.childNodes[1].childNodes[2].childNodes[3].childNodes[1].value = ""
-        cloneElement.childNodes[1].childNodes[4].childNodes[3].childNodes[1].value = ""
-        cloneElement.childNodes[1].childNodes[6].childNodes[3].childNodes[1].value = ""
-        cloneElement.childNodes[1].childNodes[0].childNodes[3].childNodes[1].name = "name" + fieldNumbers
-        cloneElement.childNodes[1].childNodes[2].childNodes[3].childNodes[1].name = "email" + fieldNumbers
-        cloneElement.childNodes[1].childNodes[4].childNodes[3].childNodes[1].name = "adjudicatorpost" + fieldNumbers
-        cloneElement.childNodes[1].childNodes[6].childNodes[3].childNodes[1].name = "adjudicatordepartment" + fieldNumbers
-        adjudicator.insertBefore(cloneElement, button)
-    }
+                                   
+                                    <div class="col-sm-12 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                                </div>
+              
+             </div>
+ 
+             <footer>
+                
+             </footer>
+         </div>
+     </div>
+     <script src="../static/new/js/feather-icons/feather.min.js"></script>
+     <script src="../static/new/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+     <script src="../static/new/js/app.js"></script>
+     <script src="../static/new/js/pages/form-editor.js"></script>
+     <script src="../static/new/vendors/chartjs/Chart.min.js"></script>
+     <script src="../static/new/vendors/apexcharts/apexcharts.min.js"></script>
+     <script src="../static/new/js/pages/dashboard.js"></script>
 
-    function removeAdjudicatorField() {
-        try {
-            var numberOfAdjudicator = document.getElementById('numberOfAdjudicator')
-            numberOfAdjudicator.value = Number(numberOfAdjudicator.value) - 1
-            var adjudicator = document.getElementById('adjudicator')
-            var fieldNumbers = adjudicator.childElementCount - 2
-            var childName = 'afield' + fieldNumbers
-            var child = document.getElementById(childName)
-            adjudicator.removeChild(child)
-        } catch (e) {
-            alert('There Must Be At Least One Field')
-        }
-    }
-</script>
-
-
-</html>
+     <script src="../static/new/vendors/simple-datatables/simple-datatables.js"></script>
+     <script src="../static/new/js/vendors.js"></script>
+     <script src="../static/new/js/main.js"></script>
+     <script src="../static/new/vendors/quill/quill.min.js"></script>
+ </body>
+ 
+ </html>

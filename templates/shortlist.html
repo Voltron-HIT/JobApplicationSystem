@@ -1,118 +1,234 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Shortlist</title>
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Shortlisting</title>
+ 
+     <link rel="stylesheet" href="../static/new/css/bootstrap.css">
+ 
+     <link rel="stylesheet" href="../static/new/vendors/chartjs/Chart.min.css">
+    <link rel="stylesheet" href="../static/new/vendors/simple-datatables/style.css">
+     <link rel="stylesheet" href="../static/new/vendors/perfect-scrollbar/perfect-scrollbar.css">
+     <link rel="stylesheet" href="../static/new/css/app.css">
+     <link rel="shortcut icon" href="../static/img/hitlogo.png" type="image/x-icon">
+ </head>
+ 
+ <body>
+     <div id="app">
+         <div id="sidebar" class='active'>
+             <div class="sidebar-wrapper active">
+                 <div class="sidebar-header">
+                     <img src="{{url_for('static', filename='img/hitlogo.png')}}" height="200px" width="180px" >
+                 </div>
+                 <div class="sidebar-menu">
+                     <ul class="menu">
+ 
+ 
+                         <li class='sidebar-title'>Main Menu</li>
+ 
+ 
+ 
+                         <li class="sidebar-item">
+                             <a href="/humanResourceHome" class='sidebar-link'>
+                                 <i data-feather="home" width="20"></i>
+                                 <span>Dashboard</span>
+                             </a>
+ 
+                         </li>
+                         <li class="sidebar-item  ">
+                             <a href="{{url_for('addVacancy')}}" class='sidebar-link'>
+                                 <i data-feather="layers" width="20"></i>
+                                 <span>Add Vacancy</span>
+                             </a>
+ 
+                         </li>
+                         <li class="sidebar-item  active  ">
+                             <a href="{{url_for('manageposts')}}" class='sidebar-link'>
+                                 <i data-feather="briefcase" width="20"></i>
+                                 <span>Manage Vacancies</span>
+                             </a>
+                           
+                         </li>
+ 
+                         <li class="sidebar-item ">
+                            <a href="{{url_for('department')}}" class='sidebar-link'>
+                                <i data-feather="briefcase" width="20"></i>
+                                <span>Manage Department</span>
+                            </a>
 
-    <!-- Bootstrap -->
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+                        </li>
 
-    <!-- Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
-
-</head>
-
-<body>
-
-    <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="#">
-            <h1><b>HIT</b></h1>
-        </a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('humanResourceHome')}}"><b>HOME</b></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('addVacancy')}}"><b>ADD VACANCY</b></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('logout')}}"><b>LOGOUT</b></a>
-                </li>
-            </ul>
-        </div>
-    </nav><br>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-sm-8 col-xs-8">
-                <form action="{{url_for('shortlist')}}" method=POST>
-                    <table class="table table-striped table-bordered text-center">
-                        <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">National I.D</th>
-                                <th scope="col">Decision</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for i, j, k in zip(x,y,z) %}
-                            <tr>
-                                <td><label>{{j}}</label></td>
-                                <td><label>{{k}}</label></td>
-                                <td>
-                                    <select name="{{i}}" class="form-control">
-					      		<option value="denied">Denied</option>
-					      		<option value="shortlist">Shortlist</option>
-					     	</select>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                            <tr class="text-center">
-                                <td colspan="3" class="text-center"><input type="submit" value="Complete Shortlist" class="btn">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form>
+ 
+   
+                        
+ 
+ 
+                     </ul>
+                 </div>
+                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+             </div>
+         </div>
+         <div id="main">
+             <nav class="navbar navbar-header navbar-expand navbar-light">
+                 <a class="sidebar-toggler" href="#"><span class="navbar-toggler-icon"></span></a>
+                 <button class="btn navbar-toggler" type="button" data-bs-toggle="collapse"
+                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                     aria-expanded="false" aria-label="Toggle navigation">
+                     <span class="navbar-toggler-icon"></span>
+                 </button>
+                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                     <ul class="navbar-nav d-flex align-items-center navbar-light ms-auto">
+                         
+                       
+                         <li class="dropdown">
+                             <a href="#" data-bs-toggle="dropdown"
+                                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                 <div class="avatar me-1">
+                                     <img src="assets/images/avatar/avatar-s-1.png" alt="" srcset="">
+                                 </div>
+                                 <div class="d-none d-md-block d-lg-inline-block">Hi, Saugi</div>
+                             </a>
+                             <div class="dropdown-menu dropdown-menu-end">
+                                 <a class="dropdown-item" href="#"><i data-feather="user"></i> Account</a>
+                                 <a class="dropdown-item active" href="#"><i data-feather="mail"></i> Messages</a>
+                                 <a class="dropdown-item" href="#"><i data-feather="settings"></i> Settings</a>
+                                 <div class="dropdown-divider"></div>
+                                 <a class="dropdown-item" href="/logout"><i data-feather="log-out"></i> Logout</a>
+                             </div>
+                         </li>
+                     </ul>
+                 </div>
+             </nav>
+             <div class="text-center">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}"> {{ message|capitalize }} </div>
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <div class="text-center">
-                    <h2>Shortlist</h2>
-                    <form class="messageForm" action="{{url_for('sendNotification')}}" method="post">
-                        <table class="table table-striped table-bordered text-center">
-                            <tr>
-                                <th colspan="2">Name</th>
-                                <th>Email</th>
-                            </tr>
-                            {% for i, j in zip(aApplicants, accepted) %}
-                            <tr>
-                                <td colspan="2">{{i}}</td>
-                                <td>{{j}}</td>
-                            </tr>
-                            {% endfor %}
-                            <tr>
-                                <td colspan="3" class="text-center"><button type="submit" class="btn"><b>Send Message</b></button></td>
-                            </tr>
-                        </table>
+             <div class="main-content container-fluid">
+                 <div class="page-title">
+                     <h3>Dashboard</h3>
+                                </div>
+                 <section class="section">
+                    
+                     <div class="row mb-3">
+                         <div class="col-md-12">
+                         
+                             <div class="card">
+                                 <div class="card-header d-flex justify-content-between align-items-center">
+                                     <h4 class="card-title">Applicants</h4>
+                                    
+                                 </div>
+                                 <div class="card-body px-0 pb-0">
+                                    <form action="{{url_for('shortlist')}}" method=POST>
+                                     <div class="table-responsive">
+                                         <table class='table table-striped' id="table1">
+                                             <thead>
+                                                 <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">National I.D</th>
+                                                    <th scope="col">Decision</th>
+                                                 </tr>
+                                             </thead>
+                                             <tbody>
+                                                {% for i, j, k in zip(x,y,z) %}
+                                                <tr>
+                                                    <td><label>{{j}}</label></td>
+                                                    <td><label>{{k}}</label></td>
+                                                    <td>
+                                                        <select name="{{i}}" class="form-select" id="basicSelect">
+                                                      <option value="denied">Denied</option>
+                                                      <option value="shortlist">Shortlist</option>
+                                                 </select>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                               
+                                            </tbody>
+                                           
+                                         </table>
+                                         <div class="col-sm-6 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary me-1 mb-1">Shortlist</button>
+                                            
+                                        </div>
+                                     </div>
+                                    </form>
+                                 </div>
+                             </div>
 
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer">
-
-    </div>
-
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-    <script src="../static/js/bootstrap.min.js"></script>
-
-
-</body>
-
-</html>
+                           
+                            
+                             <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h4 class="card-title">Shortlist</h4>
+                                    
+                                </div>
+                              
+                                <div class="card-body px-0 pb-0">
+                                    <form class="messageForm" action="{{url_for('sendNotification')}}" method="post">
+                                        <div class="col-md-3 form-group">
+                                            Date: <input type="date" class="form-control" name="date" required>
+                                              </div>
+                                              <div class="col-md-3 form-group">
+                                             Time:  <input type="time" class="form-control" name="time" required>
+                                         </div>
+                                    <div class="table-responsive">
+                                        <table class='table table-striped' id="table1">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2">Name</th>
+                                                     <th>Email</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for i, j in zip(aApplicants, accepted) %}
+                                                <tr>
+                                                    <td colspan="2">{{i}}</td>
+                                                    <td>{{j}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                              
+                                           </tbody>
+                                          
+                                        </table>
+                                        <div class="col-sm-6 d-flex justify-content-end">
+                                           <button type="submit" class="btn btn-primary me-1 mb-1">Send Message</button>
+                                           
+                                       </div>
+                                    </div>
+                                   </form>
+                                </div>
+                            </div> 
+                         </div>
+          
+                     </div>
+                 </section>
+             </div>
+ 
+             <footer>
+                
+             </footer>
+         </div>
+     </div>
+     <script src="../static/new/js/feather-icons/feather.min.js"></script>
+     <script src="../static/new/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+     <script src="../static/new/js/app.js"></script>
+ 
+     <script src="../static/new/vendors/chartjs/Chart.min.js"></script>
+     <script src="../static/new/vendors/apexcharts/apexcharts.min.js"></script>
+     <script src="../static/new/js/pages/dashboard.js"></script>
+ 
+     <script src="../static/new/vendors/simple-datatables/simple-datatables.js"></script>
+     <script src="../static/new/js/vendors.js"></script>
+     <script src="../static/new/js/main.js"></script>
+ </body>
+ 
+ </html>

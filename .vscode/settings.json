@@ -1,3 +1,6 @@
 {
-    "python.pythonPath": "C:\\Users\\Tawanda\\envs\\flaskServer\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Python39\\python.exe",
+    "editor.snippetSuggestions": "bottom",
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "jupyter.jupyterServerType": "local"
 }

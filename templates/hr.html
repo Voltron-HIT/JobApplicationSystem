@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,10 +9,10 @@
 
     <title>Human Resources Home</title>
 
-    <!-- Bootstrap -->
+    
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Stylesheet -->
+  
     <link rel="stylesheet" type="text/css" href="../static/css/style.css">
 
 </head>
@@ -152,6 +152,257 @@
     <script src="../static/js/bootstrap.min.js"></script>
 
 
+</body>
+
+</html>
+
+ -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard </title>
+
+    <link rel="stylesheet" href="../static/new/css/bootstrap.css">
+
+    <link rel="stylesheet" href="../static/new/vendors/chartjs/Chart.min.css">
+   <link rel="stylesheet" href="../static/new/vendors/simple-datatables/style.css">
+    <link rel="stylesheet" href="../static/new/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="../static/new/css/app.css">
+    <link rel="shortcut icon" href="../static/img/hitlogo.png" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+        <div id="sidebar" class='active'>
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <img src="{{url_for('static', filename='img/hitlogo.png')}}" height="200px" width="180px" >
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+
+
+                        <li class='sidebar-title'>Main Menu</li>
+
+
+
+                        <li class="sidebar-item active">
+                            <a href="/humanResourceHome" class='sidebar-link'>
+                                <i data-feather="home" width="20"></i>
+                                <span>Dashboard</span>
+                            </a>
+
+                        </li>
+                        <li class="sidebar-item  ">
+                            <a href="{{url_for('addVacancy')}}" class='sidebar-link'>
+                                <i data-feather="layers" width="20"></i>
+                                <span>Add Vacancy</span>
+                            </a>
+
+                        </li>
+                        <li class="sidebar-item  ">
+                            <a href="{{url_for('manageposts')}}" class='sidebar-link'>
+                                <i data-feather="briefcase" width="20"></i>
+                                <span>Manage Vacancies</span>
+                            </a>
+
+                        </li>
+                        <li class="sidebar-item ">
+                            <a href="{{url_for('department')}}" class='sidebar-link'>
+                                <i data-feather="briefcase" width="20"></i>
+                                <span>Manage Department</span>
+                            </a>
+
+                        </li>
+
+
+
+  
+                       
+
+
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+        <div id="main">
+            <nav class="navbar navbar-header navbar-expand navbar-light">
+                <a class="sidebar-toggler" href="#"><span class="navbar-toggler-icon"></span></a>
+                <button class="btn navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav d-flex align-items-center navbar-light ms-auto">
+                        
+                      
+                        <li class="dropdown">
+                            <a href="#" data-bs-toggle="dropdown"
+                                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                <!-- <div class="avatar me-1">
+                                    <img src="assets/images/avatar/avatar-s-1.png" alt="" srcset="">
+                                </div> -->
+                                <div class="d-none d-md-block d-lg-inline-block">{{username}}</div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                               
+                                <a class="dropdown-item" href="/logout"><i data-feather="log-out"></i> Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="main-content container-fluid">
+                <div class="page-title">
+                    <h3>Dashboard</h3>
+                               </div>
+                <section class="section">
+                    <div class="row mb-2">
+                        <div class="col-12 col-md-3">
+                            <div class="card card-statistic">
+                                <div class="card-body p-0">
+                                    <div class="d-flex flex-column">
+                                        <div class='px-4 py-4 d-flex justify-content-between'>
+                                            <h3 class='card-title'>Active Posts </h3>
+                                            <div class="card-right d-flex align-items-center">
+                                                <p>{{active}} </p>
+                                            </div>
+                                        </div>
+                                     
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="card card-statistic">
+                                <div class="card-body p-0">
+                                    <div class="d-flex flex-column">
+                                        <div class='px-4 py-4 d-flex justify-content-between'>
+                                            <h3 class='card-title'>Expired Posts</h3>
+                                            <div class="card-right d-flex align-items-center">
+                                                <p>{{expired}}</p>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="card card-statistic">
+                                <div class="card-body p-0">
+                                    <div class="d-flex flex-column">
+                                        <div class='px-4 py-4 d-flex justify-content-between'>
+                                            <h3 class='card-title'>Total Posts</h3>
+                                            <div class="card-right d-flex align-items-center">
+                                                <p>{{posts}} </p>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="card card-statistic">
+                                <div class="card-body p-0">
+                                    <div class="d-flex flex-column">
+                                        <div class='px-4 py-4 d-flex justify-content-between'>
+                                            <h3 class='card-title'>Total Applicants</h3>
+                                            <div class="card-right d-flex align-items-center">
+                                                <p>{{applicants}} </p>
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                          {% for category, message in messages %}
+                            <div class="alert alert-{{ category}}"> {{ message|capitalize }} </div>
+                          {% endfor %}
+                        {% endif %}
+                      {% endwith %}
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                        
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h4 class="card-title">Vacancies</h4>
+                                   
+                                </div>
+                                <div class="card-body px-0 pb-0">
+                                    <div class="table-responsive">
+                                        <table class='table table-striped' id="table1">
+                                            <thead>
+                                                <tr>
+                                                    <th>Department</th>
+                                                    <th>Job Post</th>
+                                                    <th>Deadline</th>
+                                                    <th>Number of Applications</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for i in post %}
+                                                <tr>
+                                                    <td>{{i[5]}}</td>
+                                                    <td>{{i[0]}}</td>
+                                                    <td>{{i[3]}}</td>
+                                                    <td>{{i[6]}}</td>
+                                                   {% if i[4]=="Active Vacancy" %}
+                                                    <td>
+                                                        <span class="badge bg-success">{{i[4]}}</span>
+                                                    </td>
+                                                    {% else %}
+                                                    <td>
+                                                        <span class="badge bg-warning">{{i[4]}}</span>
+                                                    </td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% endfor%}
+                                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+         
+                    </div>
+                </section>
+            </div>
+
+            <footer>
+               
+            </footer>
+        </div>
+    </div>
+    <script src="../static/new/js/feather-icons/feather.min.js"></script>
+    <script src="../static/new/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="../static/new/js/app.js"></script>
+
+    <script src="../static/new/vendors/chartjs/Chart.min.js"></script>
+    <script src="../static/new/vendors/apexcharts/apexcharts.min.js"></script>
+    <script src="../static/new/js/pages/dashboard.js"></script>
+
+    <script src="../static/new/vendors/simple-datatables/simple-datatables.js"></script>
+    <script src="../static/new/js/vendors.js"></script>
+    <script src="../static/new/js/main.js"></script>
 </body>
 
 </html>

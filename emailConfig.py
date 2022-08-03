@@ -1,8 +1,8 @@
 
 
-aSubject = "We would love to interview you for the {} position at Harare Institute of Technology"
+aSubject = "We would love to interview you for the {} position for the {} Department at Harare Institute of Technology"
 
-aBody = "Hi {0}, \n\nThank you so much for applying to become a part of our team. \nYour application really stood out to us, so we would like to invite you for an interview at our office to tell you a little more about the position, get to know you better, and see if this job is right for you.\n\nPlease note that the interview will be held at: \n\nHarare Institute of Technology Campus,  Ganges Road, Belvedere, Harare \n- time: {1} \n\nPlease be advised that you must arrive at the venue early.\n\nWe look forward to meeting you, \n\n-- Human Resources Department \n Harare Institute of Technology"
+aBody = "Hi {0}, \n\nThank you so much for applying to become a part of our team. \nYour application really stood out to us, so we would like to invite you for an interview at our office to tell you a little more about the position, get to know you better, and see if this job is right for you.\n\nPlease note that the interview will be held at: Harare Institute of Technology Campus,  Ganges Road, Belvedere, Harare \n- time: {1} \n- Date:{2} \n\nPlease be advised that you must arrive at the venue early.\n\nWe look forward to meeting you, \n\n-- Human Resources Department \n Harare Institute of Technology"
 
 
 dSubject = "Application for the {} position at Harare Institute of Technology"
